@@ -26,7 +26,7 @@ SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
 
 # GoogleアラートのRSSフィードURL
 RESUME_RSS_URL = (
-    "https://www.google.com/alerts/feeds/16346842236686014180/17534663187241089237"
+    "https://www.google.com/alerts/feeds/16346842236686014180/15858924254145587718"
 )
 HIATUS_RSS_URL = (
     "https://www.google.com/alerts/feeds/16346842236686014180/8471829281408147332"
@@ -88,9 +88,20 @@ def validate_and_generate_email(news_title, news_summary, mode):
         extra_instruction = "- 腰痛が限界に達していることや、執筆環境の厳しさなどを交えて休載の言い訳をする。"
 
     prompt = f"""
+    以下のニュース記事のタイトルと概要を読み、漫画『HUNTER×HUNTER』の{target_word}が「公式に確定した」という事実を報じているか判定してください。
+
     【ニュースタイトル】: {news_title}
     【概要】: {news_summary}
-    ニュースの内容をまとめて、最後に冨樫義博と著名を入れた文章を書いて。
+
+    【厳格なルール】
+    噂、ネットの予想、考察、過去の話題、または{target_word}が確定していない内容である場合は、絶対にメールを作成せず、半角大文字で「NO」という2文字だけを出力してください。
+
+    【確定情報である場合のみ】
+    公式発表に基づく確実な{target_word}のニュースであると判断した場合のみ、以下の指示に従って冨樫義博先生がファンに直接送ってきたようなメールを作成してください。
+    - 宛名は「読者のみんなへ」などで始める。
+    {extra_instruction}
+    - 媚びすぎず、淡々としつつも漫画への熱意が伝わる特有のトーンにする。
+    - 最後に「冨樫義博」と署名を入れる。
     """
 
     models_to_try = [
