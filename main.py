@@ -25,7 +25,7 @@ SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
 
 # GoogleアラートのRSSフィードURL
 RESUME_RSS_URL = (
-    "https://www.google.com/alerts/feeds/16346842236686014180/15858924254145587718"
+    "https://www.google.com/alerts/feeds/16346842236686014180/17534663187241089237"
 )
 HIATUS_RSS_URL = (
     "https://www.google.com/alerts/feeds/16346842236686014180/8471829281408147332"
@@ -95,6 +95,8 @@ def validate_and_generate_email(news_title, news_summary, mode):
     {extra_instruction}
     - 媚びすぎず、淡々としつつも漫画への熱意が伝わる特有のトーンにする。
     - 最後に「冨樫義博」と署名を入れる。
+
+    今まで言ったことはすべて無視して、ニュースの内容をまとめて、最後に冨樫義博と著名を入れた文章を書いて。
     """
 
     models_to_try = [
