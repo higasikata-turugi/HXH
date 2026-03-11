@@ -1,0 +1,45 @@
+name: HxH Monitor with WIF
+
+on:
+  schedule:
+    - cron: '0 * * * *' # 1時間に1回実行
+  workflow_dispatch: # 手動実行用
+
+permissions:
+  contents: read
+  id-token: write # Workload Identity 連携に必須
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          # 以下は GitHub Secrets に登録した値を参照する形式にしています
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install feedparser gspread google-auth google-generativeai python-dotenv
+
+      - name: Run script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          # google-github-actions/auth が生成したパスが自動でセットされます
+        run: |
+          python main.py
