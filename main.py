@@ -88,6 +88,8 @@ def validate_and_generate_email(news_title, news_summary, mode):
         extra_instruction = "- 腰痛が限界に達していることや、執筆環境の厳しさなどを交えて休載の言い訳をする。"
 
     prompt = f"""
+    【ニュースタイトル】: {news_title}
+    【概要】: {news_summary}
     ニュースの内容をまとめて、最後に冨樫義博と著名を入れた文章を書いて。
     """
 
