@@ -13,6 +13,7 @@ import google.auth
 import google.generativeai as genai
 from google.api_core import exceptions as google_exceptions
 import traceback
+import socket
 
 load_dotenv()
 
@@ -59,7 +60,13 @@ def extract_actual_url(google_alert_url):
 
 
 def get_latest_news(rss_url):
-    feed = feedparser.parse(rss_url)
+    socket.setdefaulttimeout(10)
+    print("RSSフィードを取得中...")
+    try:
+        feed = feedparser.parse(rss_url)
+        print(f"フィード取得完了: {len(feed.entries)} 件のニュースが見つかりました")
+    except Exception as e:
+        print(f"RSS取得でエラーが発生しました: {e}")
     return [
         {
             "title": entry.title,
