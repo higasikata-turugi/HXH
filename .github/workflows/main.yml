@@ -1,8 +1,8 @@
 name: HxH Monitor with WIF
 
 on:
-  schedule:
-    - cron: '0 * * * *' # 1時間に1回実行
+ # schedule:
+#    - cron: '0 * * * *' # 1時間に1回実行
   workflow_dispatch: # 手動実行用
 
 permissions:
